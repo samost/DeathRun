@@ -7,6 +7,7 @@ public class AnimatorController : MonoBehaviour
 {
     
     [SerializeField] private Animator _playerAnimator;
+    [SerializeField] private Animator _AIAnimator;
 
     public static AnimatorController Instance;
 
@@ -18,5 +19,11 @@ public class AnimatorController : MonoBehaviour
     public void SetRunAnimationPlayer(bool state)
     {
         _playerAnimator.SetBool("isRun", state);
+    }
+
+    public void SetRunAnimationAI(float value)
+    {
+        bool state = value >= 0 ? true : false;
+        _AIAnimator.SetBool("isRun", state);
     }
 }

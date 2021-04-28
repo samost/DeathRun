@@ -40,6 +40,15 @@ public class Joystick : MonoBehaviour
         }
         
         direction.Normalize();
-        MoveDirection = new Vector3(direction.x, 0, direction.y);
+        
+        
+            MoveDirection = new Vector3(direction.x, 0, 1);
+        
+        
+        
+        if (MoveDirection.z < 0)
+        {
+            MoveDirection = Vector3.zero;
+        }
     }
 }
