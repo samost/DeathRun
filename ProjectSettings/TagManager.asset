@@ -3,7 +3,13 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags: []
+  tags:
+  - Spikes
+  - PreTrap
+  - Hummer
+  - Axe
+  - Sword
+  - Trap
   layers:
   - Default
   - TransparentFX

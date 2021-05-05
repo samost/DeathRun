@@ -5,7 +5,6 @@ using UnityEngine;
 public abstract class Trap : MonoBehaviour
 {
     [SerializeField]protected List<Transform> MoveableElements;
-    protected abstract void Activate();
+    protected abstract IEnumerator Activate();
     
-    protected abstract void Return();
 }

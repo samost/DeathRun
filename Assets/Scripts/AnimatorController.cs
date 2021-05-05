@@ -7,7 +7,8 @@ public class AnimatorController : MonoBehaviour
 {
     
     [SerializeField] private Animator _playerAnimator;
-    [SerializeField] private Animator _AIAnimator;
+    
+    
 
     public static AnimatorController Instance;
 
@@ -21,9 +22,31 @@ public class AnimatorController : MonoBehaviour
         _playerAnimator.SetBool("isRun", state);
     }
 
-    public void SetRunAnimationAI(float value)
+    public void SetSpikesDeathAnimationPlayer()
     {
-        bool state = value >= 0 ? true : false;
-        _AIAnimator.SetBool("isRun", state);
+        _playerAnimator.SetTrigger("SpikesDeath");
     }
+
+    public void SetHummerDeathAnimationPlayer()
+    {
+        _playerAnimator.SetTrigger("HummerDeath");
+    }
+    
+    public void SetSpikesDeathAnimationAI(Animator anim)
+    {
+        anim.SetTrigger("SpikesDeath");
+    }
+     public void SetHummerDeathAnimationAI(Animator anim)
+    {
+        anim.SetTrigger("HummerDeath");
+    }
+    
+    
+
+    public void SetRunAnimationAI(float value,Animator anim)
+    {
+        bool state = value > 0 ? true : false;
+        anim.SetBool("isRun", state);
+    }
+    
 }

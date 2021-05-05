@@ -1,46 +1,42 @@
-﻿using DG.Tweening;
+﻿using System;
+using System.Collections;
+using DG.Tweening;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class SpikesTrap : Trap
 {
-
     private Sequence mySequence;
-    private Tween tween;
-   
-    protected override void Activate()
-   {
-       DOTween.Restart("Activate");
-   }
+    
+    private float _timer;
 
-    protected override void Return()
+    private float timeActivate;
+
+    protected override IEnumerator Activate()
     {
+        int randNum = Random.Range(0, MoveableElements.Count);
+        
+        MoveableElements[randNum].DOLocalMoveY(-4.1f, 0.3f);
+
+        yield return new WaitForSeconds(1f);
+        
+        MoveableElements[randNum].DOLocalMoveY(-17.3f, 0.3f);
         
     }
 
+    private void Start()
+    {
+        timeActivate = 0.5f;
+    }
 
-    private void CreateSequence()
-   {
-       Tween tween ;
-       for (int i = 0; i < MoveableElements.Count; i++)
-       {
-           tween = MoveableElements[i].DOLocalMoveY(-4.1f, 0.3f);
-           mySequence.Append(tween);
-       }for (int i = 0; i < MoveableElements.Count; i++)
-       {
-           tween = MoveableElements[i].DOLocalMoveY(-12.65f, 0.3f);
-           mySequence.Append(tween);
-       }
-
-       mySequence.Pause();
-       mySequence.SetId("Activate").SetAutoKill(false);
-   }
-   
-   private void Start()
-   {
-       mySequence = DOTween.Sequence();
-       CreateSequence();
-       InvokeRepeating("Activate", 0, Random.Range(4, 6));
-   }
-
-  
+    private void Update()
+    {
+        _timer += Time.deltaTime;
+        if (_timer >= timeActivate)
+        {
+            StartCoroutine(Activate());
+            timeActivate = Random.Range(3f, 4f);
+            _timer = 0;
+        }
+    }
 }

@@ -1,4 +1,6 @@
-﻿using UnityEngine;
+﻿using System;
+using DG.Tweening;
+using UnityEngine;
 
 public class PlayerMove : MoveableStickman
 {
@@ -13,7 +15,24 @@ public class PlayerMove : MoveableStickman
                 Joystick.MoveDirection != Vector3.zero ? Quaternion.LookRotation(Joystick.MoveDirection) : transform.rotation;
             transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, Time.deltaTime * SpeedRotation);
         }
-        
+        else
+        {
+            transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.Euler(0,0,0), Time.deltaTime * SpeedRotation);
+        }
+
         AnimatorController.Instance.SetRunAnimationPlayer(Joystick.tap);
     }
+
+    
+    protected override void OnTriggerEnter(Collider other)
+    {
+        base.OnTriggerEnter(other);
+        
+        if (other.CompareTag("Trap") && liveState)
+        {
+            Death();
+        }
+    }
+    
+    
 }
