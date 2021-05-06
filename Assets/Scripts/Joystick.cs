@@ -15,7 +15,7 @@ public class Joystick : MonoBehaviour
 
     
 
-    void Update()
+    void FixedUpdate()
     {
         
         if (Input.touchCount > 0)

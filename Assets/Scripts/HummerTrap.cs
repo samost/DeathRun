@@ -51,7 +51,7 @@ public class HummerTrap : Trap
 
     private void Start()
     {
-        timeActivate = Random.Range(1.7f, 2.5f);
+        timeActivate = Random.Range(2f, 3f);
         MoveHummer();
     }
 
@@ -61,7 +61,7 @@ public class HummerTrap : Trap
         if (_timer >= timeActivate)
         {
             StartCoroutine(HitHummer());
-            timeActivate = Random.Range(1.7f, 2.5f);
+            timeActivate = Random.Range(2f, 3f);
             _timer = 0;
         }
 

@@ -32,6 +32,7 @@ public class PlayerMove : MoveableStickman
         {
             Death();
         }
+        
     }
     
     

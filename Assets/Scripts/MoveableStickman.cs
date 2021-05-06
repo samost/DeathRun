@@ -55,5 +55,11 @@ public class MoveableStickman : MonoBehaviour
         skin.enabled = false;
         liveState = false;
         weaponHolder.DropWeapon();
+        
+        if (this.gameObject.CompareTag("Enemy"))
+        {
+             Destroy(this.gameObject, 2f);
+        }
+       
     }
 }

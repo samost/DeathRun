@@ -31,6 +31,11 @@ public class AnimatorController : MonoBehaviour
     {
         _playerAnimator.SetTrigger("HummerDeath");
     }
+
+    public void SetWeaponAnumationPlayer()
+    {
+        _playerAnimator.SetTrigger("Weapon1");
+    }
     
     public void SetSpikesDeathAnimationAI(Animator anim)
     {
@@ -40,6 +45,11 @@ public class AnimatorController : MonoBehaviour
     {
         anim.SetTrigger("HummerDeath");
     }
+
+     public void SetWeaponAnimationAI(Animator anim)
+     {
+         anim.SetTrigger("Weapon1");
+     }
     
     
 
