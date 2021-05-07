@@ -17,6 +17,9 @@ public class BattleController : MonoBehaviour
 
     private bool isFight = false;
 
+    private float _forcePlayer = 10f;
+    private float _forceEnemy = 0;
+
 
     private void Start()
     {
@@ -29,20 +32,23 @@ public class BattleController : MonoBehaviour
         {
             StartCoroutine(CheckEnemysCorutine());
             _player = other.gameObject;
-            
-            _player.GetComponent<PlayerMove>().liveState = false;
+
+
+            _player.GetComponent<PlayerMove>().liveState = false;             // for stop moved
             AnimatorController.Instance.SetRunAnimationPlayer(false);
             
+            CameraController.Instance.SwapCam();
+
+            _forcePlayer += _player.GetComponent<PlayerMove>().weaponHolder.GetWeaponForce();
         }
 
         if (other.CompareTag("Enemy"))
         {
-            StateCheckCourutine = false;
-            
             AddEnemy(other.gameObject);
-            StartBattle(other.gameObject);
-            StartCoroutine(PlayerLookAt());
-            AnimatorController.Instance.SetWeaponAnumationPlayer();
+            StartCoroutine(Wait(other.gameObject));
+            
+            _forceEnemy += other.gameObject.GetComponent<AIMove>().weaponHolder.GetWeaponForce();
+            _forceEnemy += 1;
         }
     }
 
@@ -57,12 +63,15 @@ public class BattleController : MonoBehaviour
                 StateCheckCourutine = false;
             }
 
-            Debug.Log("test");
+            //Debug.Log("test");
+            
+            Debug.Log(_forceEnemy);
+            Debug.Log(_forcePlayer);
             
             yield return null;
         }
         
-        Debug.Log("Great!!!");
+        //Debug.Log("Great!!!");
         yield break;
     }
     
@@ -80,14 +89,73 @@ public class BattleController : MonoBehaviour
         navMeshAgent.SetDestination(_player.transform.position);
         o.transform.LookAt(_player.transform);
         AnimatorController.Instance.SetWeaponAnimationAI(o.GetComponent<Animator>());
+        
+        DetermineWinner();
     }
 
     private IEnumerator PlayerLookAt()
     {
         while (true)
         {
+            if (_enemys.Count == 0)
+                yield break;
+            
+            
             _player.transform.LookAt(_enemys[0].transform.position);
             yield return null;
         }
+    }
+
+    private void DetermineWinner()
+    {
+        if (_forcePlayer >= _forceEnemy)
+        {
+            StartCoroutine(WinPlayerRoutine());
+        }
+        else
+        {
+            StartCoroutine(WinEnemyRoutine());
+        }
+    }
+
+    private IEnumerator WinPlayerRoutine()
+    {
+        while (_enemys.Count != 0)
+        {
+            yield return new WaitForSeconds(2f);
+            _enemys[0].GetComponent<AIMove>().Death();
+            _enemys.RemoveAt(0);
+        }
+        
+        yield break;
+    }
+    
+    private IEnumerator WinEnemyRoutine()
+    {
+        yield return new WaitForSeconds(3f);
+        _player.GetComponent<PlayerMove>().Death();
+    }
+
+    private IEnumerator Wait(GameObject o )
+    {
+        bool state = true;
+        
+        while (state)
+        {
+            if (_player == null)
+            {
+                yield return null;
+            }
+            else
+            {
+                StartBattle(o.gameObject);
+                StartCoroutine(PlayerLookAt());
+                AnimatorController.Instance.SetWeaponAnumationPlayer();
+                _forceEnemy += 1;
+                state = false;
+            }
+        }
+        
+        yield break;
     }
 }

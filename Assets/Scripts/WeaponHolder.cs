@@ -36,4 +36,22 @@ public class WeaponHolder : MonoBehaviour
         }
        
     }
+
+    public int GetWeaponForce()
+    {
+        if (currentWeapon == null)
+        {
+            return 0;
+        }
+        
+        switch (currentWeapon.tag)
+        {
+            case "Sword":
+                return 1;
+            case "Axe":
+                return 2;
+        }
+
+        return 0;
+    }
 }

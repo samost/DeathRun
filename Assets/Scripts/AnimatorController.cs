@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class AnimatorController : MonoBehaviour
 {
@@ -34,7 +35,9 @@ public class AnimatorController : MonoBehaviour
 
     public void SetWeaponAnumationPlayer()
     {
-        _playerAnimator.SetTrigger("Weapon1");
+        int rand = Random.Range(1, 7);
+        
+        _playerAnimator.SetTrigger("Weapon" + rand.ToString());
     }
     
     public void SetSpikesDeathAnimationAI(Animator anim)
@@ -48,7 +51,9 @@ public class AnimatorController : MonoBehaviour
 
      public void SetWeaponAnimationAI(Animator anim)
      {
-         anim.SetTrigger("Weapon1");
+         int rand = Random.Range(1, 7);
+         
+         anim.SetTrigger("Weapon" + rand.ToString());
      }
     
     

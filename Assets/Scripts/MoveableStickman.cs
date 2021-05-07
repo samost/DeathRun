@@ -15,7 +15,7 @@ public class MoveableStickman : MonoBehaviour
     protected SkinnedMeshRenderer skin;
     
     [SerializeField]
-    protected WeaponHolder weaponHolder;
+    public WeaponHolder weaponHolder;
 
     [SerializeField] private WeaponsTagsList weaponsTagsList;
 
@@ -49,7 +49,7 @@ public class MoveableStickman : MonoBehaviour
         }
     }
 
-    protected void Death()
+    public void Death()
     {
         _deathParticle.Play();
         skin.enabled = false;
