@@ -64,4 +64,14 @@ public class MoveableStickman : MonoBehaviour
         }
        
     }
+
+    public float GetSpeed()
+    {
+        return Speed;
+    }
+
+    public void SetSpeed(float f)
+    {
+        Speed = f;
+    }
 }
