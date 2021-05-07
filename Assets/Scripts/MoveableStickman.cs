@@ -6,7 +6,8 @@ using UnityEngine;
 public class MoveableStickman : MonoBehaviour
 {
     [SerializeField] protected float Speed;
-    protected new Rigidbody rigidbody;
+    
+    protected Rigidbody rigidbody;
     
     [SerializeField]
     protected ParticleSystem _deathParticle;
@@ -58,6 +59,7 @@ public class MoveableStickman : MonoBehaviour
         
         if (this.gameObject.CompareTag("Enemy"))
         {
+             BattleController._enemysCount.RemoveAt(0);
              Destroy(this.gameObject, 2f);
         }
        

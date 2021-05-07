@@ -11,27 +11,29 @@ public class BattleController : MonoBehaviour
     private List<GameObject> _enemys;
     private GameObject _player;
     
-    private bool StateCheckCourutine = true;
 
     private Transform _target;
 
-    private bool isFight = false;
-
     private float _forcePlayer = 10f;
-    private float _forceEnemy = 0;
+    private float _forceEnemy = 0f;
+
+    public static List<GameObject> _enemysCount;
 
 
     private void Start()
     {
         _enemys = new List<GameObject>();
+        
+        _enemysCount = new List<GameObject>(GameObject.FindGameObjectsWithTag("Enemy"));
     }
 
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Player"))
         {
-            StartCoroutine(CheckEnemysCorutine());
             _player = other.gameObject;
+            StartCoroutine(CheckEnemysCorutine());
+            
 
 
             _player.GetComponent<PlayerMove>().liveState = false;             // for stop moved
@@ -45,7 +47,7 @@ public class BattleController : MonoBehaviour
         if (other.CompareTag("Enemy"))
         {
             AddEnemy(other.gameObject);
-            StartCoroutine(Wait(other.gameObject));
+            //StartCoroutine(Wait(other.gameObject));
             
             _forceEnemy += other.gameObject.GetComponent<AIMove>().weaponHolder.GetWeaponForce();
             _forceEnemy += 1;
@@ -54,25 +56,12 @@ public class BattleController : MonoBehaviour
 
     IEnumerator CheckEnemysCorutine()
     {
-        while (StateCheckCourutine)
+        while (_enemysCount.Count != _enemys.Count)
         {
-            GameObject[] countEnemyLive = GameObject.FindGameObjectsWithTag("Enemy");
-
-            if (countEnemyLive.Length == 0)
-            {
-                StateCheckCourutine = false;
-            }
-
-            //Debug.Log("test");
-            
-            Debug.Log(_forceEnemy);
-            Debug.Log(_forcePlayer);
-            
             yield return null;
         }
         
-        //Debug.Log("Great!!!");
-        yield break;
+        StartBattle();
     }
     
 
@@ -82,14 +71,22 @@ public class BattleController : MonoBehaviour
         _enemys.Add(o);
     }
 
-    private void StartBattle(GameObject o)
+    private void StartBattle()
     {
-        NavMeshAgent navMeshAgent = o.GetComponent<NavMeshAgent>();
-        navMeshAgent.enabled = true;
-        navMeshAgent.SetDestination(_player.transform.position);
-        o.transform.LookAt(_player.transform);
-        AnimatorController.Instance.SetWeaponAnimationAI(o.GetComponent<Animator>());
+        StartCoroutine(PlayerLookAt());
+        AnimatorController.Instance.SetWeaponAnumationPlayer();
         
+        NavMeshAgent navMeshAgent;
+        
+        for (int i = 0; i < _enemys.Count; i++)
+        {
+            navMeshAgent = _enemys[i].GetComponent<NavMeshAgent>();
+            navMeshAgent.enabled = true;
+            navMeshAgent.SetDestination(_player.transform.position);
+            _enemys[i].transform.LookAt(_player.transform);
+            AnimatorController.Instance.SetWeaponAnimationAI(_enemys[i].GetComponent<Animator>());
+        }
+
         DetermineWinner();
     }
 
@@ -127,35 +124,15 @@ public class BattleController : MonoBehaviour
             _enemys.RemoveAt(0);
         }
         
+        StopAllCoroutines();
         yield break;
+        
     }
     
     private IEnumerator WinEnemyRoutine()
     {
         yield return new WaitForSeconds(3f);
         _player.GetComponent<PlayerMove>().Death();
-    }
-
-    private IEnumerator Wait(GameObject o )
-    {
-        bool state = true;
-        
-        while (state)
-        {
-            if (_player == null)
-            {
-                yield return null;
-            }
-            else
-            {
-                StartBattle(o.gameObject);
-                StartCoroutine(PlayerLookAt());
-                AnimatorController.Instance.SetWeaponAnumationPlayer();
-                _forceEnemy += 1;
-                state = false;
-            }
-        }
-        
-        yield break;
+        StopAllCoroutines();
     }
 }
