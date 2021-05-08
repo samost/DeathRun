@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using Bolt;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.PlayerLoop;
@@ -14,10 +15,12 @@ public class BattleController : MonoBehaviour
 
     private Transform _target;
 
-    private float _forcePlayer = 10f;
+    private float _forcePlayer = 3f;
     private float _forceEnemy = 0f;
 
     public static List<GameObject> _enemysCount;
+
+    [SerializeField] private GameObject ui_result;
 
 
     private void Start()
@@ -74,7 +77,8 @@ public class BattleController : MonoBehaviour
     private void StartBattle()
     {
         StartCoroutine(PlayerLookAt());
-        AnimatorController.Instance.SetWeaponAnumationPlayer();
+        
+        AnimatorController.Instance.SetWeaponAnimationPlayer(_player.GetComponent<PlayerMove>().isWeapon);
         
         NavMeshAgent navMeshAgent;
         
@@ -84,9 +88,10 @@ public class BattleController : MonoBehaviour
             navMeshAgent.enabled = true;
             navMeshAgent.SetDestination(_player.transform.position);
             _enemys[i].transform.LookAt(_player.transform);
-            AnimatorController.Instance.SetWeaponAnimationAI(_enemys[i].GetComponent<Animator>());
+            
+            AnimatorController.Instance.SetWeaponAnimationAI(_enemys[i].GetComponent<Animator>(), _enemys[i].GetComponent<AIMove>().isWeapon);
         }
-
+        
         DetermineWinner();
     }
 
@@ -105,6 +110,9 @@ public class BattleController : MonoBehaviour
 
     private void DetermineWinner()
     {
+        Debug.Log(_forceEnemy);
+        Debug.Log(_forcePlayer);
+        
         if (_forcePlayer >= _forceEnemy)
         {
             StartCoroutine(WinPlayerRoutine());
@@ -125,6 +133,8 @@ public class BattleController : MonoBehaviour
         }
         
         StopAllCoroutines();
+        
+        CustomEvent.Trigger(ui_result, "result_play", 3, 2);
         yield break;
         
     }
@@ -133,6 +143,8 @@ public class BattleController : MonoBehaviour
     {
         yield return new WaitForSeconds(3f);
         _player.GetComponent<PlayerMove>().Death();
+        
+        CustomEvent.Trigger(ui_result, "result_play", 0, 2);
         StopAllCoroutines();
     }
 }

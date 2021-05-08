@@ -33,11 +33,22 @@ public class AnimatorController : MonoBehaviour
         _playerAnimator.SetTrigger("HummerDeath");
     }
 
-    public void SetWeaponAnumationPlayer()
+    public void SetWeaponAnimationPlayer(bool isWeapon)
     {
-        int rand = Random.Range(1, 7);
+        int rand;
         
-        _playerAnimator.SetTrigger("Weapon" + rand.ToString());
+        if (isWeapon)
+        {
+            rand = Random.Range(1, 4);
+            _playerAnimator.SetTrigger("WeaponMelee" + rand.ToString());
+        }
+        else
+        {
+            rand = Random.Range(1, 7);
+                    
+            _playerAnimator.SetTrigger("Weapon" + rand.ToString());
+        }
+        
     }
     
     public void SetSpikesDeathAnimationAI(Animator anim)
@@ -49,11 +60,21 @@ public class AnimatorController : MonoBehaviour
         anim.SetTrigger("HummerDeath");
     }
 
-     public void SetWeaponAnimationAI(Animator anim)
+     public void SetWeaponAnimationAI(Animator anim, bool isWeapon)
      {
-         int rand = Random.Range(1, 7);
-         
-         anim.SetTrigger("Weapon" + rand.ToString());
+
+         int rand;
+        
+         if (isWeapon)
+         {
+             rand = Random.Range(1, 4);
+             anim.SetTrigger("WeaponMelee" + rand.ToString());
+         }
+         else
+         {
+             rand = Random.Range(1, 7);
+             anim.SetTrigger("Weapon" + rand.ToString());
+         }
      }
     
     

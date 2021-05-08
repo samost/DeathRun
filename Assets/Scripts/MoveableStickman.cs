@@ -23,6 +23,10 @@ public class MoveableStickman : MonoBehaviour
     [HideInInspector] public bool liveState =  true;
 
     protected Animator Animator;
+
+    [HideInInspector] public bool isWeapon =  false;
+
+    [SerializeField] private GameObject looseUI;
     
 
     protected virtual void Start()
@@ -47,6 +51,7 @@ public class MoveableStickman : MonoBehaviour
         {
             other.gameObject.SetActive(false);
             weaponHolder.AddWeapon(other.tag);
+            isWeapon = true;
         }
     }
 
@@ -61,6 +66,11 @@ public class MoveableStickman : MonoBehaviour
         {
              BattleController._enemysCount.RemoveAt(0);
              Destroy(this.gameObject, 2f);
+        }
+        
+        if (this.gameObject.CompareTag("Player") && liveState)
+        {
+            looseUI.SetActive(true);
         }
        
     }

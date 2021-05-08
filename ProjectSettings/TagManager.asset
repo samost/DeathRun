@@ -12,6 +12,7 @@ TagManager:
   - Trap
   - PreTrapMaytnik
   - Enemy
+  - Sheild
   layers:
   - Default
   - TransparentFX

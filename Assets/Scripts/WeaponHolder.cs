@@ -50,6 +50,8 @@ public class WeaponHolder : MonoBehaviour
                 return 1;
             case "Axe":
                 return 2;
+            case "Sheild":
+                return 1;
         }
 
         return 0;

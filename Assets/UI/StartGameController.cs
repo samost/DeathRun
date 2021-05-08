@@ -7,14 +7,16 @@ using UnityEngine.UI;
 public class StartGameController : MonoBehaviour
 {
 
-    [SerializeField] private List<GameObject> enemys;
+    private List<GameObject> enemys;
     [SerializeField] private Image finger;
     [SerializeField] private Image line;
+    [SerializeField] private GameObject BarUI;
 
     private float oldSpeed;
     
     void Start()
     {
+        enemys = new List<GameObject>(GameObject.FindGameObjectsWithTag("Enemy"));
         foreach (var enemy in enemys)
         {
             var o = enemy.GetComponent<AIMove>();
@@ -39,6 +41,7 @@ public class StartGameController : MonoBehaviour
                 var o = enemy.GetComponent<AIMove>();
                 o.SetSpeed(oldSpeed);
             }
+            BarUI.SetActive(true);
             this.gameObject.SetActive(false);
         }
     }
