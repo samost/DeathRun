@@ -27,6 +27,8 @@ public class MoveableStickman : MonoBehaviour
     [HideInInspector] public bool isWeapon =  false;
 
     [SerializeField] private GameObject looseUI;
+
+    [HideInInspector] public bool isFinishDeath = false;
     
 
     protected virtual void Start()
@@ -68,7 +70,7 @@ public class MoveableStickman : MonoBehaviour
              Destroy(this.gameObject, 2f);
         }
         
-        if (this.gameObject.CompareTag("Player") && liveState)
+        if (this.gameObject.CompareTag("Player") && !isFinishDeath)
         {
             looseUI.SetActive(true);
         }

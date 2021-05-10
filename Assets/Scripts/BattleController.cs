@@ -15,12 +15,13 @@ public class BattleController : MonoBehaviour
 
     private Transform _target;
 
-    private float _forcePlayer = 3f;
+    private float _forcePlayer = 10f;
     private float _forceEnemy = 0f;
 
     public static List<GameObject> _enemysCount;
 
     [SerializeField] private GameObject ui_result;
+    [SerializeField] private GameObject uiBar;
 
 
     private void Start()
@@ -34,17 +35,21 @@ public class BattleController : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
+            uiBar.SetActive(false);
+            
             _player = other.gameObject;
             StartCoroutine(CheckEnemysCorutine());
+
+
+            var o = _player.GetComponent<PlayerMove>();
+            o.liveState = false;                                 // for stop moved
+            o.isFinishDeath = true;
             
-
-
-            _player.GetComponent<PlayerMove>().liveState = false;             // for stop moved
             AnimatorController.Instance.SetRunAnimationPlayer(false);
             
             CameraController.Instance.SwapCam();
 
-            _forcePlayer += _player.GetComponent<PlayerMove>().weaponHolder.GetWeaponForce();
+            _forcePlayer += o.weaponHolder.GetWeaponForce();
         }
 
         if (other.CompareTag("Enemy"))
@@ -97,15 +102,15 @@ public class BattleController : MonoBehaviour
 
     private IEnumerator PlayerLookAt()
     {
-        while (true)
+
+        while (_enemys.Count != 0)
         {
-            if (_enemys.Count == 0)
-                yield break;
-            
-            
             _player.transform.LookAt(_enemys[0].transform.position);
             yield return null;
         }
+        
+        _player.transform.LookAt(null);
+        yield break;
     }
 
     private void DetermineWinner()
@@ -134,7 +139,7 @@ public class BattleController : MonoBehaviour
         
         StopAllCoroutines();
         
-        CustomEvent.Trigger(ui_result, "result_play", 3, 2);
+        CustomEvent.Trigger(ui_result, "result_play", 1, 2);
         yield break;
         
     }
@@ -144,7 +149,7 @@ public class BattleController : MonoBehaviour
         yield return new WaitForSeconds(3f);
         _player.GetComponent<PlayerMove>().Death();
         
-        CustomEvent.Trigger(ui_result, "result_play", 0, 2);
+        CustomEvent.Trigger(ui_result, "result_play", 1, 2);
         StopAllCoroutines();
     }
 }
