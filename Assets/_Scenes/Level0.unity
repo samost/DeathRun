@@ -99,7 +99,7 @@ LightmapSettings:
     m_LightProbeSampleCountMultiplier: 4
   m_LightingDataAsset: {fileID: 112000000, guid: 8c780078f0bc8ae4aaeda21e619ca8af,
     type: 2}
-  m_UseShadowmask: 1
+  m_UseShadowmask: 0
 --- !u!196 &4
 NavMeshSettings:
   serializedVersion: 2
@@ -1533,40 +1533,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 899835224}
     m_Modifications:
-    - target: {fileID: 607735469876355537, guid: 143b893a7f9747542aa17a97460b97ff,
-        type: 3}
-      propertyPath: m_SizeDelta.y
-      value: 103
-      objectReference: {fileID: 0}
-    - target: {fileID: 607735469876355537, guid: 143b893a7f9747542aa17a97460b97ff,
-        type: 3}
-      propertyPath: m_AnchoredPosition.x
-      value: -65.2
-      objectReference: {fileID: 0}
-    - target: {fileID: 3151059515852361984, guid: 143b893a7f9747542aa17a97460b97ff,
-        type: 3}
-      propertyPath: m_Color.b
-      value: 0.009611944
-      objectReference: {fileID: 0}
-    - target: {fileID: 3151059515852361984, guid: 143b893a7f9747542aa17a97460b97ff,
-        type: 3}
-      propertyPath: m_Color.g
-      value: 0.45428067
-      objectReference: {fileID: 0}
-    - target: {fileID: 3151059515852361984, guid: 143b893a7f9747542aa17a97460b97ff,
-        type: 3}
-      propertyPath: m_Color.r
-      value: 0.6792453
-      objectReference: {fileID: 0}
     - target: {fileID: 3151059516226123510, guid: 143b893a7f9747542aa17a97460b97ff,
         type: 3}
       propertyPath: m_Name
       value: UI_money
-      objectReference: {fileID: 0}
-    - target: {fileID: 3151059516226123510, guid: 143b893a7f9747542aa17a97460b97ff,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3151059516226123512, guid: 143b893a7f9747542aa17a97460b97ff,
         type: 3}
@@ -1678,29 +1648,6 @@ PrefabInstance:
       propertyPath: m_Camera
       value: 
       objectReference: {fileID: 963194227}
-    - target: {fileID: 4290419117968970354, guid: 143b893a7f9747542aa17a97460b97ff,
-        type: 3}
-      propertyPath: m_Sprite
-      value: 
-      objectReference: {fileID: 21300000, guid: 61bab6fe875cb064388f8457284fbba7,
-        type: 3}
-    - target: {fileID: 4290419117968970354, guid: 143b893a7f9747542aa17a97460b97ff,
-        type: 3}
-      propertyPath: m_Material
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 5091449807441902514, guid: 143b893a7f9747542aa17a97460b97ff,
-        type: 3}
-      propertyPath: m_Sprite
-      value: 
-      objectReference: {fileID: 21300000, guid: 797b5d84a282f934eb9449c4bac3ac97,
-        type: 3}
-    - target: {fileID: 8288306089355502454, guid: 143b893a7f9747542aa17a97460b97ff,
-        type: 3}
-      propertyPath: m_Sprite
-      value: 
-      objectReference: {fileID: 21300000, guid: 797b5d84a282f934eb9449c4bac3ac97,
-        type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 143b893a7f9747542aa17a97460b97ff, type: 3}
 --- !u!1 &475081330 stripped
