@@ -99,7 +99,7 @@ LightmapSettings:
     m_LightProbeSampleCountMultiplier: 4
   m_LightingDataAsset: {fileID: 112000000, guid: 8c780078f0bc8ae4aaeda21e619ca8af,
     type: 2}
-  m_UseShadowmask: 1
+  m_UseShadowmask: 0
 --- !u!196 &4
 NavMeshSettings:
   serializedVersion: 2
@@ -2185,7 +2185,7 @@ PrefabInstance:
     - target: {fileID: 6480942382478749367, guid: 653ecc7a58c0c8f4e98b43af317d227b,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: LoadLeveL
+      value: ReLoadScene
       objectReference: {fileID: 0}
     - target: {fileID: 8233608071826679516, guid: 653ecc7a58c0c8f4e98b43af317d227b,
         type: 3}
@@ -4084,7 +4084,7 @@ PrefabInstance:
     - target: {fileID: 2776964915830844954, guid: dfcfce957bb4b8a4da86460c912f1b69,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
-      value: 1
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 2776964915830844954, guid: dfcfce957bb4b8a4da86460c912f1b69,
         type: 3}
@@ -4094,7 +4094,12 @@ PrefabInstance:
     - target: {fileID: 2776964915830844954, guid: dfcfce957bb4b8a4da86460c912f1b69,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: UpLvl
+      value: LoadScene
+      objectReference: {fileID: 0}
+    - target: {fileID: 2776964915830844954, guid: dfcfce957bb4b8a4da86460c912f1b69,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_StringArgument
+      value: Level4
       objectReference: {fileID: 0}
     - target: {fileID: 4340071874324883441, guid: dfcfce957bb4b8a4da86460c912f1b69,
         type: 3}
@@ -5568,7 +5573,7 @@ GameObject:
   - component: {fileID: 1910057070}
   - component: {fileID: 1910057069}
   m_Layer: 0
-  m_Name: LevelManager
+  m_Name: Scene Loader
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5583,9 +5588,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 1910057068}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 028bd791675b95041b2aab125219e12a, type: 3}
+  m_Script: {fileID: 11500000, guid: 748ff2a97da5463785b4389b6f528eec, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isPreLoader: 0
 --- !u!4 &1910057070
 Transform:
   m_ObjectHideFlags: 0
